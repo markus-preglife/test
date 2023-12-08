@@ -1,0 +1,43 @@
+{
+  "name": "cloud-function",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/index.js",
+  "config": {
+    "function_name": "test",
+    "region": "europe-west3",
+    "gcp_project": "preglife-template-cloud-stage"
+  },
+  "license": "Apache-2.0",
+  "keywords": [],
+  "scripts": {
+    "clean": "rimraf build/*",
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
+    "compile": "tsc",
+    "migrate": "node migrator up",
+    "seed": "node seeder up",
+    "gcp-build": "npm run clean && npm run compile",
+    "dev": "node --inspect node_modules/.bin/functions-framework --source=build/ --target=main",
+    "watch": "concurrently \"npm run compile -- --watch\" \"nodemon --watch ./build/ --exec npm run dev\""
+  },
+  "devDependencies": {
+    "@google-cloud/functions-framework": "^3.3.0",
+    "@types/node": "^20.4.7",
+    "@typescript-eslint/eslint-plugin": "^6.2.1",
+    "@typescript-eslint/parser": "^6.2.1",
+    "concurrently": "^8.2.0",
+    "eslint": "^8.46.0",
+    "nodemon": "^3.0.1",
+    "prettier": "^3.0.2",
+    "rimraf": "^5.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@google-cloud/logging": "^10.3.1",
+    "@google-cloud/pubsub": "^3.2.1",
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.3"
+  }
+}

@@ -1,0 +1,36 @@
+steps:
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['install']
+  dir: './'
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: 
+    [
+      'functions',
+      'deploy',
+      'hello-pub-sub',
+      '--trigger-topic',
+      'helloPubSub',
+      '--runtime',
+      'nodejs20',
+      '--entry-point',
+      'helloPubSub',
+      '--region',
+      'europe-west3',
+    ]
+  dir: './'
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+    [
+      'functions',
+      'deploy',
+      'hello-world',
+      '--trigger-http',
+      '--runtime',
+      'nodejs20',
+      '--entry-point',
+      'helloWorld',
+      '--region',
+      'europe-west3',
+      '--allow-unauthenticated'
+    ]
+  dir: './'
